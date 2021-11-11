@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<script type="text/javascript">
+function ShowModal() {
+    $("#resultdialog").modal('show');
+}
+    </script>
+
+@model MyModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+<div class="card text-center w-50 mx-auto">
+    <div class="card-header">
+        <h6 class="">Guess a number between 0 and 100 </h6>
+        <h3 class="text-info"> Start guessing</h3>
+        <p>@ViewBag.sessionv</p>
+    </div>
+
+    @Html.ValidationMessageFor(x => x.EnteredNum, null, new { @class = "text-danger" })
+    <div class="card-body">
+        <div class="input-group mb-3">
+            @Html.HiddenFor(x => x.MyNumber)
+           
+            @Html.TextBoxFor(x => x.EnteredNum, new { @class = "form-control" })
+
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-danger btn-outline-secondary text-light">Try it please</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<div class="container w-50 mx-auto">
+    <div tabindex="-1" role="dialog" id="resultdialog">
+    </div>
+    <h5 class="title">result</h5>
+    <button type="button" class="close" data-dismiss="" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+
+    <div class="">
+        <p>@ViewBag.Result</p>
+        
+    </div>
+</div>
+    <div class="container w-50 mx-auto">
+
+        @if (Model.Success)
+        {
+            <a class="btn text-light bg-info text-center" asp-area="" asp-controller="Home" asp-action="Index">Start Again</a>
+        }
+        else
+        { <button type="button" class="btn text-dark text-center btn-outline-dark text-dark" data-dismiss="">Try again</button>}
+    </div>
+    }
